@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="trpolaris-tpscreen-cover.png" alt="TRPOLARIS TP-SCREEN" width="100%">
+  <img src="Photo.png" alt="TRPOLARIS TP-SCREEN" width="100%">
 </p>
 
 <h1 align="center">TRPOLARIS TP-SCREEN</h1>
