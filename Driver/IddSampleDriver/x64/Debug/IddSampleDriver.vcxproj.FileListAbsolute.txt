@@ -1,0 +1,2 @@
+C:\Users\TRPOLARIS\Desktop\Polaris Display NEW Design\Driver\x64\Debug\IddSampleDriver.dll.lastcodeanalysissucceeded
+C:\Users\TRPOLARIS\Desktop\Polaris Display NEW Design\Driver\IddSampleDriver\x64\Debug\NativeCodeAnalysis.read.1.tlog
