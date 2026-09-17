@@ -1,0 +1,71 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <ApplicationIcon>Assets\TPPolarisServer.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="ServerForm.Runtime.cs">
+      <DependentUpon>ServerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Update="ServerForm.Designer.cs">
+      <DependentUpon>ServerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Update="BroadcastPage.Designer.cs">
+      <DependentUpon>BroadcastPage.cs</DependentUpon>
+    </Compile>
+    <Compile Update="ConnectionsPage.Designer.cs">
+      <DependentUpon>ConnectionsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Update="AboutPage.Designer.cs">
+      <DependentUpon>AboutPage.cs</DependentUpon>
+    </Compile>
+    <Compile Update="LogPage.Designer.cs">
+      <DependentUpon>LogPage.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Update="ServerForm.resx">
+      <DependentUpon>ServerForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="..\Driver\Runtime\IddSampleDriver.inf" LogicalName="PolarisDisplay.DriverRuntime.IddSampleDriver.inf" />
+    <EmbeddedResource Include="..\Driver\Runtime\IddSampleDriver.cat" LogicalName="PolarisDisplay.DriverRuntime.IddSampleDriver.cat" />
+    <EmbeddedResource Include="..\Driver\Runtime\IddSampleDriver.dll" LogicalName="PolarisDisplay.DriverRuntime.IddSampleDriver.dll" />
+    <EmbeddedResource Include="..\Driver\Runtime\IddSampleDriver.cer" LogicalName="PolarisDisplay.DriverRuntime.IddSampleDriver.cer" />
+    <EmbeddedResource Include="..\Driver\Runtime\IddSampleApp.exe" LogicalName="PolarisDisplay.DriverRuntime.IddSampleApp.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="QRCoder" Version="1.6.0" />
+  </ItemGroup>
+  <ItemGroup><Compile Update="StatisticsPage.Designer.cs"><DependentUpon>StatisticsPage.cs</DependentUpon></Compile></ItemGroup>
+  <ItemGroup>
+    <Compile Update="AdminPage.Designer.cs"><DependentUpon>AdminPage.cs</DependentUpon></Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="CloseChoiceDialogForm.Designer.cs"><DependentUpon>CloseChoiceDialogForm.cs</DependentUpon></Compile>
+    <Compile Update="DisplayModeDialogForm.Designer.cs"><DependentUpon>DisplayModeDialogForm.cs</DependentUpon></Compile>
+    <Compile Update="ServerSettingsDialogForm.Designer.cs"><DependentUpon>ServerSettingsDialogForm.cs</DependentUpon></Compile>
+  </ItemGroup>
+</Project>

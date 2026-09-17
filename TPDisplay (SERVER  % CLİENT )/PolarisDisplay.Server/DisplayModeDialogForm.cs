@@ -1,0 +1,11 @@
+using System.Runtime.InteropServices;
+namespace PolarisDisplay.Server;
+internal sealed partial class DisplayModeDialogForm:Form
+{
+ private readonly Screen _screen; private readonly Action _refresh;
+ public DisplayModeDialogForm(Screen screen,Action refresh){_screen=screen;_refresh=refresh;InitializeComponent(); PolarisTheme.Apply(this);}
+ protected override void OnLoad(EventArgs e){base.OnLoad(e);Text=$"{GetName()} • Görüntü Modu";var modes=DisplayModeService.GetModes(_screen.DeviceName);_combo.Items.Clear();foreach(var m in modes)_combo.Items.Add(m);var current=DisplayModeService.GetCurrent(_screen.DeviceName);if(current is not null){int idx=modes.FindIndex(x=>x.Width==current.Width&&x.Height==current.Height&&x.Hz==current.Hz&&x.Orientation==current.Orientation);if(idx>=0)_combo.SelectedIndex=idx;}if(_combo.SelectedIndex<0&&_combo.Items.Count>0)_combo.SelectedIndex=0;}
+ private string GetName(){var screens=Screen.AllScreens.Where(IsPolarisVirtualScreen).OrderBy(x=>x.DeviceName,StringComparer.OrdinalIgnoreCase).ToList();int i=screens.FindIndex(x=>string.Equals(x.DeviceName,_screen.DeviceName,StringComparison.OrdinalIgnoreCase));return i>=0?$"Ekran {i+1}":"Polaris Ekran";}
+ private static bool IsPolarisVirtualScreen(Screen screen){try{var d=new DisplayInterop.DISPLAY_DEVICE{cb=Marshal.SizeOf<DisplayInterop.DISPLAY_DEVICE>()};for(uint i=0;DisplayInterop.EnumDisplayDevices(null,i,ref d,0);i++){if(string.Equals(d.DeviceName,screen.DeviceName,StringComparison.OrdinalIgnoreCase)){var m=d.DeviceString??"";var p=d.DeviceID??"";return m.Contains("IddSample",StringComparison.OrdinalIgnoreCase)||m.Contains("TRPOLARIS",StringComparison.OrdinalIgnoreCase)||p.Contains("IddSample",StringComparison.OrdinalIgnoreCase)||p.Contains("TRPOLARIS",StringComparison.OrdinalIgnoreCase)||m.Contains("Indirect Display",StringComparison.OrdinalIgnoreCase)||m.Contains("INDIRECTDISPLAY",StringComparison.OrdinalIgnoreCase);}}}catch{}return false;}
+ private void _apply_Click(object? s,EventArgs e){if(_combo.SelectedItem is DisplayModeChoice choice){if(!DisplayModeService.Apply(_screen.DeviceName,choice)){MessageBox.Show(this,"Görüntü modu uygulanamadı.","PolarisDisplay",MessageBoxButtons.OK,MessageBoxIcon.Warning);return;}_refresh();DialogResult=DialogResult.OK;}}
+}
