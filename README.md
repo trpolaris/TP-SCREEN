@@ -1,177 +1,136 @@
-# TRPOLARIS
+# 🚀 TRPOLARIS
 
-TRPOLARIS is a Windows virtual-display system with a Flutter Android viewer.
+<p align="center">
+  <strong>Windows Virtual Display & Android Viewer</strong>
+</p>
 
-The repository contains:
+<p align="center">
+  TRPOLARIS is a display streaming system that creates a virtual display on Windows and streams the display to Android devices in real time over a local network.
+</p>
 
-- **PolarisDisplay.Server** — Windows server application.
-- **PolarisDisplay.Client** — Windows client application.
-- **Driver** — Windows Indirect Display Driver (IddCx) and runtime files.
-- **Installer** — Inno Setup scripts for Server and Viewer.
-- **TPViewer** — Flutter Android viewer.
+<p align="center">
 
-## Architecture
+![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Android-blue)
+![Driver](https://img.shields.io/badge/Driver-IddCx-purple)
+![Server](https://img.shields.io/badge/Server-.NET-512BD4)
+![Viewer](https://img.shields.io/badge/Viewer-Flutter-02569B)
+![Network](https://img.shields.io/badge/Network-LAN-green)
 
-```text
-Windows PC
-┌──────────────────────────────────────────────┐
-│ PolarisDisplay.Server                        │
-│   ├─ IddSampleDriver                         │
-│   ├─ IddSampleApp                            │
-│   └─ Screen streaming / discovery / PIN      │
-└───────────────────┬──────────────────────────┘
-                    │ LAN
-          UDP 50504  │  discovery
-          TCP 50505  │  display stream
-                    │
-                    ▼
-              Android TPViewer
-```
+</p>
 
-### Network ports
+---
 
-| Purpose | Protocol | Port |
-|---|---|---:|
-| Server discovery | UDP | **50504** |
-| Display stream | TCP | **50505** |
+## ✨ Features
 
-The Android viewer uses LAN discovery and can also connect to a saved server profile by IP/port.
+### 🖥️ Windows Server
 
-## Features
+* 🖥️ Creates a virtual display on Windows
+* ⚙️ Windows Indirect Display Driver (IddCx) support
+* 🔌 Automatic driver installation
+* 🔐 Driver certificate installation
+* 📡 LAN server discovery
+* 🔑 PIN-based connection
+* 📊 Connection and streaming statistics
+* 🖥️ Resolution management
+* 🔄 Client connection management
+* 📦 Embedded driver runtime resources
 
-### Android viewer
+### 📱 Android Viewer
 
-- Automatic LAN server discovery.
-- Saved server profiles.
-- Server name, IP, port and PIN.
-- Automatic reconnect after short network interruptions.
-- Protection against stale socket callbacks closing a newer connection.
-- Real-time FPS and Mbps statistics.
-- Ping measurement.
-- Resolution and stream-status information.
-- Full-screen viewing.
-- Portrait/landscape handling based on the remote display.
-- Animated launch/splash assets.
-- Keep-screen-on support.
-- Saved last-used server/session information.
+* 🔎 Automatic LAN server discovery
+* 🔗 Quick server connection
+* 💾 Saved server profiles
+* 🔐 PIN support
+* 🔄 Automatic reconnect
+* 📈 Real-time FPS
+* 🌐 Mbps information
+* 📶 Ping measurement
+* 🖥️ Resolution information
+* 🎬 Stream status
+* ⛶ Fullscreen viewing
+* 🔄 Portrait / landscape support
+* 🖥️ Detects Windows display resolution changes
+* 👆 Touch-based information panel
+* 🎞️ Animated splash screen
 
-The supplied project notes describe the viewer's discovery/display protocol as UDP 50504 and TCP 50505 and identify the release-discovery fix as part of the final Android work.
+---
 
-### Windows server/client
-
-- Windows virtual display through IddCx.
-- Automatic driver bootstrap from the server.
-- Embedded driver runtime resources.
-- Driver certificate installation during setup.
-- Server/client WinForms UI.
-- Server broadcasting/discovery.
-- PIN authentication.
-- Display configuration and resolution handling.
-- Statistics and connection management.
-- Inno Setup installers.
-
-The server embeds the following runtime files:
+# 🧩 Project Structure
 
 ```text
-Driver/Runtime/
-├── IddSampleDriver.inf
-├── IddSampleDriver.cat
-├── IddSampleDriver.dll
-├── IddSampleDriver.cer
-└── IddSampleApp.exe
+TRPOLARIS/
+│
+├── Driver/
+│   ├── IddSampleApp/
+│   ├── IddSampleDriver/
+│   └── Runtime/
+│       ├── IddSampleDriver.inf
+│       ├── IddSampleDriver.cat
+│       ├── IddSampleDriver.dll
+│       ├── IddSampleDriver.cer
+│       └── IddSampleApp.exe
+│
+├── PolarisDisplay.Server/
+│
+├── PolarisDisplay.Client/
+│
+├── Installer/
+│   ├── Server/
+│   │   └── Server.iss
+│   └── Viewer/
+│       └── Viewer.iss
+│
+├── TPViewer/
+│   ├── android/
+│   ├── assets/
+│   ├── lib/
+│   ├── pubspec.yaml
+│   └── pubspec.lock
+│
+├── PolarisDisplay.sln
+├── Build-Driver-And-Stage.ps1
+├── .gitignore
+├── .gitattributes
+└── README.md
 ```
 
-## Requirements
+---
 
-### Windows development
+# 🌐 Network
 
-The supplied driver/project configuration targets:
+TRPOLARIS uses two main network connections over the local network:
 
-- Windows x64
-- Visual Studio **2022**
-- MSVC **v143**
-- Windows SDK **10.0.26100.0**
-- WDK **26100** (the supplied project notes specify WDK 26100.6584)
-- .NET SDK **8.x**
-- Inno Setup **7.x** for building installers
+| Purpose             | Protocol |    Port |
+| ------------------- | -------- | ------: |
+| 🔎 Server Discovery | UDP      | `50504` |
+| 🎥 Display Stream   | TCP      | `50505` |
 
-The driver solution contains:
+### Connection Flow
 
 ```text
-Driver/IddSampleDriver.sln
+Android Viewer
+      │
+      │ UDP 50504
+      ▼
+Server Discovery
+      │
+      │ TCP 50505
+      ▼
+TRPOLARIS Server
+      │
+      ▼
+Virtual Display
 ```
 
-and the main Windows solution contains:
+---
 
-```text
-PolarisDisplay.sln
-```
+# 🖥️ Driver
 
-### Android development
+The TRPOLARIS Display Driver is a **Windows Indirect Display Driver (IddCx)** based driver responsible for creating and managing virtual displays on Windows.
 
-Install:
+### Driver Runtime
 
-- Flutter SDK with Dart SDK **3.9+**
-- Android Studio
-- Android SDK
-- Android SDK Platform/Build Tools required by your Flutter SDK
-- Android NDK **28.2.13676358**
-- A physical Android device or Android emulator
-
-The Flutter project declares:
-
-```yaml
-environment:
-  sdk: ">=3.9.0 <4.0.0"
-```
-
-and the Android module explicitly requests:
-
-```text
-NDK 28.2.13676358
-```
-
-## Windows driver setup
-
-### 1. Install Visual Studio 2022
-
-Install the C++ desktop workload and the components needed for Windows driver development.
-
-Make sure the following are available:
-
-- MSVC v143
-- Windows 10/11 SDK
-- Windows Driver Kit (WDK)
-- C++ build tools
-
-The supplied project is configured around Windows SDK/WDK 26100 and MSVC v143.
-
-### 2. Build the driver
-
-Open:
-
-```text
-Driver/IddSampleDriver.sln
-```
-
-Build:
-
-```text
-Release | x64
-```
-
-This solution contains:
-
-- `IddSampleDriver`
-- `IddSampleApp`
-
-### 3. Stage the runtime
-
-The server expects these files in:
-
-```text
-Driver/Runtime/
-```
+The Server uses the following runtime files:
 
 ```text
 IddSampleDriver.inf
@@ -181,12 +140,113 @@ IddSampleDriver.cer
 IddSampleApp.exe
 ```
 
-The repository includes `Build-Driver-And-Stage.ps1` to automate driver build/staging when the local Visual Studio/WDK environment is configured correctly.
+When the Server starts, it uses these runtime files to initialize the virtual display infrastructure.
 
-Run PowerShell from the repository root:
+### Driver Build
+
+Recommended development environment:
+
+```text
+Visual Studio 2022
+MSVC v143
+Windows SDK 26100
+WDK 26100
+Platform: x64
+```
+
+Driver solution:
+
+```text
+Driver/IddSampleDriver.sln
+```
+
+The driver should be built as **Release / x64**.
+
+---
+
+# ⚙️ Driver Installation Flow
+
+The TRPOLARIS Server includes an automatic driver bootstrap system:
+
+```text
+Server.exe
+   │
+   ▼
+DriverBootstrap.EnsureInstalled()
+   │
+   ▼
+Embedded Driver Files
+   │
+   ▼
+Certificate Verification
+   │
+   ▼
+Windows Certificate Store
+   │
+   ▼
+pnputil /add-driver
+   │
+   ▼
+pnputil /scan-devices
+   │
+   ▼
+IddSampleApp.exe
+   │
+   ▼
+Virtual Display
+```
+
+This system is designed so that end users do not have to manually manage driver folders or installation commands.
+
+---
+
+# 🔐 Certificate
+
+The included `IddSampleDriver.cer` certificate is intended for **development/testing purposes**.
+
+During installation, the certificate is added to:
+
+```text
+Trusted Root
+        +
+Trusted Publisher
+```
+
+> ⚠️ **Important:** The included development/test certificate should not be used as a production driver-signing solution. A proper production driver-signing process should be used for public distribution.
+
+---
+
+# 🛠️ Requirements
+
+## Windows
+
+Before building the Windows components, install:
+
+```text
+Visual Studio 2022
+Windows SDK 26100
+WDK 26100
+MSVC v143
+.NET SDK
+Inno Setup 7.x
+```
+
+---
+
+# 🔨 Windows Build
+
+Clone the repository:
 
 ```powershell
-Set-ExecutionPolicy -Scope Process Bypass
+git clone https://github.com/trpolaris/TP-SCREEN.git
+cd TP-SCREEN
+```
+
+## Driver
+
+Build and stage the driver:
+
+```powershell
 .\Build-Driver-And-Stage.ps1
 ```
 
@@ -196,384 +256,424 @@ For an explicit x64 build:
 .\Build-Driver-And-Stage.ps1 -Platform x64
 ```
 
-If your copy of the script exposes different parameters, use:
+---
 
-```powershell
-Get-Help .\Build-Driver-And-Stage.ps1 -Detailed
-```
+## Server
 
-### 4. Build the Windows applications
-
-From the repository root:
+Restore dependencies:
 
 ```powershell
 dotnet restore .\PolarisDisplay.Server\PolarisDisplay.Server.csproj
-dotnet restore .\PolarisDisplay.Client\PolarisDisplay.Client.csproj
 ```
 
 Build Release:
 
 ```powershell
 dotnet build .\PolarisDisplay.Server\PolarisDisplay.Server.csproj -c Release
-dotnet build .\PolarisDisplay.Client\PolarisDisplay.Client.csproj -c Release
 ```
 
-Or open:
-
-```text
-PolarisDisplay.sln
-```
-
-in Visual Studio 2022 and build both projects as Release.
-
-### 5. Publish the applications
-
-Server:
+Publish:
 
 ```powershell
 dotnet publish .\PolarisDisplay.Server\PolarisDisplay.Server.csproj `
-  -c Release -r win-x64 --self-contained true
+  -c Release `
+  -r win-x64 `
+  --self-contained true
 ```
 
-Client:
+---
+
+## Client
+
+Restore dependencies:
+
+```powershell
+dotnet restore .\PolarisDisplay.Client\PolarisDisplay.Client.csproj
+```
+
+Build Release:
+
+```powershell
+dotnet build .\PolarisDisplay.Client\PolarisDisplay.Client.csproj -c Release
+```
+
+Publish:
 
 ```powershell
 dotnet publish .\PolarisDisplay.Client\PolarisDisplay.Client.csproj `
-  -c Release -r win-x64 --self-contained true
+  -c Release `
+  -r win-x64 `
+  --self-contained true
 ```
 
-The project files are configured for single-file, self-contained publishing.
+---
 
-## Building the Server installer
+# 📦 Installer
 
-Install Inno Setup 7.
+The installer uses **Inno Setup 7.x**.
 
-Open:
+Server installer:
 
 ```text
 Installer/Server/Server.iss
 ```
 
-Before compiling, make sure the Server publish output expected by the script is present:
+Viewer installer:
 
 ```text
-Installer/Server/Publish/PolarisDisplay.Server.exe
+Installer/Viewer/Viewer.iss
 ```
 
-Then compile `Server.iss` with Inno Setup.
+The main Server installer workflow is:
 
-The installer:
+```text
+Installer
+   │
+   ├── Server installation
+   ├── Certificate installation
+   ├── Driver preparation
+   └── Server startup
+```
 
-1. Installs the Server.
-2. Installs the supplied development/test driver certificate into the Windows certificate stores.
-3. Starts the Server with administrator privileges.
-4. Lets the Server bootstrap its embedded driver runtime.
+Administrator privileges are required during installation.
 
-### Important: test certificate
+---
 
-The included `IddSampleDriver.cer` is a **development/test certificate**, not a production code-signing certificate.
+# 📱 Android Viewer
 
-For public production distribution, replace the development/test signing workflow with an appropriate production driver-signing process. Do not treat the included certificate as a production trust model.
+The Android Viewer is located in:
 
-## Building the Viewer installer
+```text
+TPViewer/
+```
 
-Build/publish the Windows Viewer first:
+Required tools:
+
+```text
+Flutter SDK
+Dart SDK
+Android Studio
+Android SDK
+Android SDK Build Tools
+Android NDK
+```
+
+Check the Flutter environment:
 
 ```powershell
-dotnet publish .\PolarisDisplay.Client\PolarisDisplay.Client.csproj `
-  -c Release -r win-x64 --self-contained true
+flutter doctor
 ```
 
-Then place the resulting executable where expected by:
+---
 
-```text
-Installer/Viewer/Viewer.iss
-```
-
-Compile:
-
-```text
-Installer/Viewer/Viewer.iss
-```
-
-with Inno Setup.
-
-## Android viewer setup
+# 🚀 Android Setup
 
 Go to the Android project:
 
 ```powershell
-cd .\TPViewer
+cd TPViewer
 ```
 
-Check Flutter:
+Clean the project:
 
 ```powershell
-flutter --version
-flutter doctor
+flutter clean
 ```
 
 Install dependencies:
 
 ```powershell
-flutter clean
 flutter pub get
 ```
 
-Run on a connected device:
+Check connected devices:
 
 ```powershell
 flutter devices
+```
+
+Run the application:
+
+```powershell
 flutter run
 ```
 
-### Android release APK
+---
 
-Build:
+# 📦 Release APK
+
+Build a release APK:
 
 ```powershell
 flutter clean
+```
+
+```powershell
 flutter pub get
+```
+
+```powershell
 flutter build apk --release
 ```
 
-The APK will be generated under Flutter's normal build output directory:
+The APK is generated under:
 
 ```text
 TPViewer/build/app/outputs/flutter-apk/
 ```
 
-### Android release test
+For release testing, it is recommended to install the APK directly on a physical Android device instead of relying on an Android Studio debug run.
 
-For a clean release test, install the generated APK directly on the Android device instead of relying on an Android Studio debug run.
+---
 
-Verify:
+# 🔄 Reconnect System
 
-- Splash/launch screen.
-- Automatic server discovery.
-- Server connection.
-- PIN authentication.
-- FPS.
-- Mbps.
-- Ping.
-- Resolution.
-- Stream status.
-- Full-screen mode.
-- Information panel timeout/tap behavior.
-- Windows landscape → portrait.
-- Windows portrait → landscape.
-- Phone rotation.
-- Reconnect after network interruption.
+The TRPOLARIS Viewer can automatically reconnect when the network connection is temporarily interrupted.
 
-## Android project configuration
-
-The main manifest contains the required network permission:
-
-```xml
-<uses-permission android:name="android.permission.INTERNET"/>
-```
-
-The Android application uses Flutter's Android embedding v2.
-
-The project explicitly configures:
+Basic flow:
 
 ```text
-Java 17
-Kotlin JVM target 17
-NDK 28.2.13676358
+Connected
+   │
+   ▼
+Connection Lost
+   │
+   ▼
+Wait
+   │
+   ▼
+Reconnect
+   │
+   ▼
+Connected
 ```
 
-The Gradle wrapper bundled with the supplied project is configured for Gradle 9.3.1.
+The connection system also uses socket identity/generation checks to prevent callbacks from an old socket from accidentally closing a newer connection.
 
-## Firewall / LAN
+---
 
-The Windows machine and Android device must be able to communicate over the local network.
+# 📊 Stream Statistics
 
-Allow the TRPOLARIS Server through Windows Firewall when Windows asks for network access.
-
-Required traffic:
+The Viewer can display:
 
 ```text
-UDP 50504  -> discovery
-TCP 50505  -> display stream
+FPS
+Mbps
+Ping
+Resolution
+Stream Status
 ```
 
-If automatic discovery does not work:
+When the first frame is received, the stream becomes active.
 
-1. Confirm both devices are on the same LAN.
-2. Check Windows Firewall.
-3. Confirm UDP 50504 is not blocked.
-4. Confirm TCP 50505 is not blocked.
-5. Try connecting with the server's IP address and TCP port manually.
+---
 
-## Repository layout
+# 🖥️ Fullscreen & Orientation
+
+Fullscreen mode supports:
+
+* Hiding system bars.
+* Keeping the screen awake.
+* Displaying FPS / Mbps / Ping information.
+* Automatically hiding the information panel after a timeout.
+* Showing the panel again when the screen is touched.
+* Tracking Windows display orientation changes.
+
+Example:
 
 ```text
-TRPOLARIS/
-├── Driver/
-│   ├── IddSampleApp/
-│   ├── IddSampleDriver/
-│   ├── Runtime/
-│   └── IddSampleDriver.sln
-│
-├── Installer/
-│   ├── Server/
-│   │   └── Server.iss
-│   └── Viewer/
-│       └── Viewer.iss
-│
-├── PolarisDisplay.Server/
-├── PolarisDisplay.Client/
-├── PolarisDisplay.sln
-├── Build-Driver-And-Stage.ps1
-├── TPViewer/
-│   ├── android/
-│   ├── assets/
-│   ├── lib/
-│   ├── pubspec.yaml
-│   └── pubspec.lock
-├── .gitignore
-└── README.md
+1920 × 1080
+      ↓
+Landscape
+
+1080 × 1920
+      ↓
+Portrait
 ```
 
-## What is intentionally excluded
+---
 
-This repository has been cleaned for GitHub/source distribution. The following categories are intentionally excluded:
+# 🔥 Release Test Checklist
 
-- Visual Studio `.vs` data.
-- JetBrains/Android Studio `.idea` data.
-- `.NET` `bin/` and `obj/` output.
-- Gradle caches.
-- Flutter `.dart_tool/` and build output.
-- Android `local.properties`.
-- Per-user Visual Studio/project files.
-- NuGet/MSBuild generated metadata.
-- Debug logs and compiler analysis artifacts.
-- Inno Setup generated `Output/` and `Publish/` directories.
-- Previous internal development notes and temporary README text.
+Before releasing a new version, verify:
 
-The driver runtime under `Driver/Runtime/` is intentionally retained because the Windows Server project embeds those files as resources.
+```text
+☐ Splash screen
+☐ Server discovery
+☐ Server connection
+☐ PIN authentication
+☐ FPS
+☐ Mbps
+☐ Ping
+☐ Resolution
+☐ Stream status
+☐ Fullscreen
+☐ Information panel
+☐ Panel timeout
+☐ Touch to show panel
+☐ Landscape
+☐ Portrait
+☐ Windows rotation
+☐ Phone rotation
+☐ Reconnect
+```
 
-## Development workflow
+---
+
+# 🧪 Development Workflow
 
 For driver changes:
 
 ```text
-IddSampleDriver / IddSampleApp
-        ↓
-Release x64 build
-        ↓
+Driver Build
+     ↓
 Driver/Runtime
-        ↓
-PolarisDisplay.Server build
-        ↓
-Server publish
-        ↓
-Inno Setup
-        ↓
-Server installer
+     ↓
+Server Build
+     ↓
+Server Publish
+     ↓
+Installer
+     ↓
+Test
 ```
 
 For Android changes:
 
 ```text
-TPViewer
-   ↓
+Flutter Source
+     ↓
 flutter clean
-   ↓
+     ↓
 flutter pub get
-   ↓
+     ↓
 flutter run
-   ↓
-device testing
-   ↓
+     ↓
+Device Test
+     ↓
 flutter build apk --release
+     ↓
+Release Test
 ```
 
-Keep the Windows UI Designer layout stable unless a UI change is intentional. Runtime behavior should preferably remain in the existing runtime/partial code structure.
+---
 
-## Troubleshooting
+# 🧹 GitHub Repository Cleanup
 
-### Driver headers are missing
+The repository uses `.gitignore` to prevent unnecessary build and user-specific files from being committed.
 
-Errors such as:
+Examples:
 
 ```text
-wudfwdm.h not found
-wdf.h not found
-iddcx.h not found
+.vs/
+.idea/
+bin/
+obj/
+build/
+.dart_tool/
+.gradle/
+local.properties
+*.pdb
+*.log
 ```
 
-usually indicate that the correct WDK/SDK installation is missing or Visual Studio is not using the expected toolchain.
+Required driver runtime files are intentionally kept in the repository.
 
-Verify:
+---
+
+# 🔒 Security
+
+Never commit the following to GitHub:
 
 ```text
-Visual Studio 2022
-MSVC v143
-Windows SDK 26100
-WDK 26100
+❌ Private Keys
+❌ API Keys
+❌ Real PINs
+❌ Production Certificates
+❌ Passwords
+❌ User-specific configuration files
 ```
 
-### Driver installation reports certificate trust errors
+Development/test certificates should not be used for production distribution.
 
-A development/test certificate may not be trusted on a clean Windows installation.
+---
 
-The Server installer is designed to add the included certificate to:
+# 📁 Main Components
+
+| Component                   | Description            |
+| --------------------------- | ---------------------- |
+| 🖥️ `PolarisDisplay.Server` | Windows Server         |
+| 🖼️ `PolarisDisplay.Client` | Windows Client         |
+| ⚙️ `Driver`                 | Virtual Display Driver |
+| 📦 `Installer`              | Windows Installers     |
+| 📱 `TPViewer`               | Android Viewer         |
+
+---
+
+# 📌 Project Status
+
+TRPOLARIS is an actively developed Windows + Android virtual display solution.
+
+The current project includes:
 
 ```text
-Root
-TrustedPublisher
+✅ Virtual Display
+✅ Automatic Discovery
+✅ PIN Connection
+✅ Reconnect
+✅ FPS
+✅ Mbps
+✅ Ping
+✅ Fullscreen
+✅ Portrait / Landscape
+✅ Resolution Handling
+✅ Driver Bootstrap
+✅ Installer
+✅ Android Viewer
 ```
 
-For production distribution, use a production driver-signing and trust model rather than the included development certificate.
+---
 
-### Android discovery works in debug but not release
+# 🧑‍💻 Development
 
-Verify that the main manifest contains:
+When implementing new features, the existing working architecture should be preserved whenever possible.
 
-```xml
-<uses-permission android:name="android.permission.INTERNET"/>
-```
-
-The supplied project already places this permission in the main manifest.
-
-Also verify Windows Firewall and LAN access to UDP 50504/TCP 50505.
-
-### Android build complains about NDK
-
-Use:
+In particular, avoid unnecessary changes to:
 
 ```text
-NDK 28.2.13676358
+UI Designer
+Driver Runtime
+Connection Architecture
 ```
 
-The application module explicitly requests this version.
+Recommended development approach:
 
-### Flutter project cannot find Android configuration
-
-From `TPViewer`:
-
-```powershell
-flutter clean
-flutter pub get
-flutter create --platforms=android .
+```text
+Existing Code
+     ↓
+Minimal Changes
+     ↓
+Build
+     ↓
+Test
+     ↓
+Release
 ```
 
-Use the last command only if the Android platform files have been removed or corrupted; review any regenerated files against the repository before committing.
+---
 
-## Security notes
+# 📄 License
 
-- Never commit real production passwords, private keys, API keys, or signing keys.
-- The included driver certificate is for development/test use.
-- Replace development signing with a production signing workflow before distributing a production Windows driver.
-- Review firewall rules before deploying outside a trusted LAN.
-- PINs are application credentials; do not publish real server PINs in source control.
+No `LICENSE` file has been included with the project yet.
 
-## License
+If you intend to publish the project as open source on GitHub, add an appropriate license before allowing reuse.
 
-No license was supplied with the provided project files. Add an appropriate `LICENSE` file before publishing the repository if you want to grant reuse rights.
+---
 
-## Status
+<p align="center">
 
-This repository is a cleaned source package based on the supplied TRPOLARIS Windows and Android project files. The supplied project notes identify the Android viewer's final release-discovery fix as the last critical test item; therefore, verify the release APK on a clean physical Android device before treating a release as production-ready.
+### 🚀 TRPOLARIS
+
+**Virtual Display • Windows • Android • LAN**
+
+</p>
