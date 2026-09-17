@@ -664,10 +664,14 @@ Release
 
 # 📄 License
 
-No `LICENSE` file has been included with the project yet.
+TRPOLARIS application code is licensed under the **MIT License**.
 
-If you intend to publish the project as open source on GitHub, add an appropriate license before allowing reuse.
+The Windows Indirect Display Driver components under the `Driver/` directory
+contain code derived from Microsoft's Windows Driver Samples and are subject
+to the **Microsoft Public License (MS-PL)** and the applicable copyright and
+attribution notices.
 
+See [`LICENSE`](./LICENSE) and [`NOTICE.md`](./NOTICE.md) for details.
 ---
 
 <p align="center">
