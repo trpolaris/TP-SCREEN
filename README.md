@@ -18,31 +18,31 @@
   <br>
   
   #### 1. Hakkında (About)
-  <img src="https://trpolaris.online](https://trpolaris.online/storage/my-project/tp-screen/about.png" width="100%" alt="About">
+  <img src="https://trpolaris.online/storage/my-project/tp-screen/about.png" width="100%" alt="About">
   
   #### 2. İstemci Ayarları (Settings Client)
-  <img src="https://trpolaris.online" width="100%" alt="Settings Client">
+  <img src="https://trpolaris.online/storage/my-project/tp-screen/settings-cliennt.png" width="100%" alt="Settings Client">
   
   #### 3. İstatistikler (Statistic)
-  <img src="https://trpolaris.online" width="100%" alt="Statistic">
+  <img src="https://trpolaris.online/storage/my-project/tp-screen/statistic.png" width="100%" alt="Statistic">
   
   #### 4. Canlı Yayın / Akış (Stream)
-  <img src="https://trpolaris.online" width="100%" alt="Stream">
+  <img src="https://trpolaris.online/storage/my-project/tp-screen/stream.png" width="100%" alt="Stream">
   
   #### 5. Log Kayıtları (Log)
-  <img src="https://trpolaris.online" width="100%" alt="Log">
+  <img src="https://trpolaris.online/storage/my-project/tp-screen/log.png" width="100%" alt="Log">
   
   #### 6. Yönetim Paneli (Management)
-  <img src="https://trpolaris.online" width="100%" alt="Management">
+  <img src="https://trpolaris.online/storage/my-project/tp-screen/management.png" width="100%" alt="Management">
   
   #### 7. Bağlantı (Connection)
-  <img src="https://trpolaris.online" width="100%" alt="Connection">
+  <img src="https://trpolaris.online/storage/my-project/tp-screen/connection.png" width="100%" alt="Connection">
   
   #### 8. İstemci Ekranı (Display Client)
-  <img src="https://trpolaris.online" width="100%" alt="Display Client">
+  <img src="https://trpolaris.online/storage/my-project/tp-screen/display-client.png" width="100%" alt="Display Client">
   
   #### 9. İstemci Bağlantısı (Connect Client)
-  <img src="https://trpolaris.online" width="100%" alt="Connect Client">
+  <img src="https://trpolaris.online/storage/my-project/tp-screen/connect-client.png" width="100%" alt="Connect Client">
 
 </details>
 
